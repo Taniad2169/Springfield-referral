@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Springfield Auto Parts & Repairs – referral form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #eb0c17 0%, #fccf05 100%);
+            padding: 1rem;
+        }
+
+        .card {
+            background-color: white;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 32px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.35), 0 8px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            padding: 2rem 2rem 2.5rem 2rem;
+        }
+
+        .main-title {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            text-align: center;
+            color: #1a1e2b;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .main-title span {
+            display: inline-block;
+            background: linear-gradient(135deg, #eb0c17 20%, #fccf05 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 0 0.2rem;
+        }
+
+        .sub-header {
+            text-align: center;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #2d3748;
+            background: #f1f5f9;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            margin: 0 auto 1.8rem auto;
+            border: 1px solid rgba(235, 12, 23, 0.15);
+        }
+
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .field-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .field-label::before {
+            content: "•";
+            color: #eb0c17;
+            font-weight: bold;
+            font-size: 1.4rem;
+            line-height: 0;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 24px;
+            outline: none;
+            background-color: #fafcff;
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: #eb0c17;
+            box-shadow: 0 0 0 4px rgba(235, 12, 23, 0.15);
+        }
+
+        /* radio groups - single choice */
+        .time-options, .contact-options, .reason-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem 2rem;
+            background: #f8fafc;
+            padding: 1rem 1.4rem;
+            border-radius: 30px;
+            border: 1px solid #e9edf2;
+        }
+
+        .time-options label, .contact-options label, .reason-options label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 500;
+            color: #1e293b;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            width: 1.2rem;
+            height: 1.2rem;
+            accent-color: #eb0c17;
+            margin: 0;
+        }
+
+        /* special other button + auto-fill field */
+        .other-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            background: #fff4e5;
+            padding: 0.8rem 1.4rem;
+            border-radius: 40px;
+            border: 1px solid #fccf05;
+        }
+
+        #otherBtn {
+            background: #fccf05;
+            border: none;
+            border-radius: 40px;
+            padding: 0.6rem 1.4rem;
+            font-weight: 700;
+            color: #1e1e2a;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            border: 1px solid #eb0c17;
+            transition: 0.1s;
+        }
+
+        #otherBtn:hover {
+            background: #eb0c17;
+            color: white;
+        }
+
+        #otherNote {
+            flex: 2 1 220px;
+            background: #fffcf5;
+            border: 1px solid #fccf05;
+            border-radius: 40px;
+            padding: 0.6rem 1.2rem;
+            font-style: italic;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        /* referrer row inline */
+        .referrer-row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .referrer-row .field-group {
+            flex: 1 1 180px;
+        }
+
+        /* SMS button */
+        .sms-btn {
+            background: linear-gradient(105deg, #eb0c17, #fccf05);
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding: 1rem 1.8rem;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 12px 20px -10px rgba(235, 12, 23, 0.4);
+            transition: 0.15s;
+            margin-top: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+
+        .sms-btn:hover {
+            background: linear-gradient(105deg, #d00a14, #e5ba04);
+            transform: scale(1.01);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 1.8rem;
+            border-top: 1px solid #edf2f7;
+            padding-top: 0.8rem;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .smug-note {
+            background: #fff9e0;
+            border-radius: 30px;
+            padding: 0.1rem 1rem;
+            border: 1px solid #fccf05;
+        }
+
+        /* hidden radio for "other" reason */
+        .hidden-other {
+            display: none; /* hide the radio itself, we control via button */
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="main-title">
+            <span>Springfield</span> Auto Parts & Repairs <br> referral form
+        </div>
+        <div style="text-align: center; margin-bottom: 0.5rem;">
+            <span class="sub-header">📲 SMS will be sent to shop</span>
+        </div>
+
+        <form id="referralForm" onsubmit="return false;">
+            <div class="form-grid">
+                <!-- Referral Name & phone -->
+                <div class="field-group">
+                    <label class="field-label" for="refName">Referral name</label>
+                    <input type="text" id="refName" placeholder="e.g. Michael Scott" required>
+                </div>
+                <div class="field-group">
+                    <label class="field-label" for="refPhone">Phone number</label>
+                    <input type="tel" id="refPhone" placeholder="(555) 123-4567" required>
+                </div>
+
+                <!-- best time · radio single choice -->
+                <fieldset>
+                    <legend class="field-label">Best time to contact</legend>
+                    <div class="time-options">
+                        <label><input type="radio" name="bestTime" value="morning" checked> 🌅 Morning</label>
+                        <label><input type="radio" name="bestTime" value="afternoon"> ☀️ Afternoon</label>
+                        <label><input type="radio" name="bestTime" value="evening"> 🌙 Evening</label>
+                    </div>
+                </fieldset>
+
+                <!-- best way · RADIO (call / text) · exactly one -->
+                <fieldset>
+                    <legend class="field-label">Best way to contact (choose one)</legend>
+                    <div class="contact-options">
+                        <label><input type="radio" name="bestWay" value="call" checked> 📞 Call</label>
+                        <label><input type="radio" name="bestWay" value="text"> 💬 Text</label>
+                    </div>
+                </fieldset>
+
+                <!-- reason group · RADIO: car trouble / car service+oil / smug + hidden radio for OTHER -->
+                <fieldset>
+                    <legend class="field-label">Reason (select one)</legend>
+                    <div class="reason-options">
+                        <label><input type="radio" name="reason" id="reasonTrouble" value="car trouble" checked> 🚗 Car trouble</label>
+                        <label><input type="radio" name="reason" id="reasonService" value="car service / oil change"> 🔧 Car service/oil change</label>
+                        <label class="smug-note"><input type="radio" name="reason" id="reasonSmug" value="smug"> 😏 Smug</label>
+                        <!-- hidden other radio - will be selected via button, not displayed -->
+                        <input type="radio" name="reason" id="reasonOther" value="other (will discuss with mechanic)" class="hidden-other">
+                    </div>
+                </fieldset>
+
+                <!-- OTHER button + autofill description (now also selects hidden other radio) -->
+                <div class="other-row">
+                    <button type="button" id="otherBtn" onclick="selectOtherReason()">➕ OTHER</button>
+                    <span id="otherNote">will discuss with mechanic shop</span>
+                </div>
+
+                <!-- name of referrer + phone -->
+                <div class="referrer-row">
+                    <div class="field-group">
+                        <label class="field-label" for="referrerName">Name of referrer</label>
+                        <input type="text" id="referrerName" placeholder="Your name">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="referrerPhone">Referrer phone</label>
+                        <input type="tel" id="referrerPhone" placeholder="(555) 987-6543">
+                    </div>
+                </div>
+
+                <!-- SMS button (sends to 5164441448) -->
+                <button type="button" class="sms-btn" onclick="sendSms()">📱 SEND SMS to shop</button>
+            </div>
+        </form>
+
+        <div class="footer-note">
+            <span style="background: linear-gradient(90deg, #eb0c17, #fccf05); padding:0.2rem 0.6rem; border-radius:50px; color:white;">linear-gradient eb0c17 #fccf05</span>  •  SMS: 516-444-1448
+        </div>
+    </div>
+
+    <script>
+        // OTHER button: selects hidden "other" radio, unchecks all visible reason radios,
+        // and updates note to show it's "other" with mechanic discussion.
+        function selectOtherReason() {
+            // Uncheck all visible reason radios (trouble, service, smug)
+            document.getElementById('reasonTrouble').checked = false;
+            document.getElementById('reasonService').checked = false;
+            document.getElementById('reasonSmug').checked = false;
+            
+            // Check the hidden "other" radio
+            document.getElementById('reasonOther').checked = true;
+            
+            // Update the note (already good, but make it prominent)
+            const noteEl = document.getElementById('otherNote');
+            noteEl.innerText = '✅ OTHER selected — will discuss with mechanic shop';
+            noteEl.style.backgroundColor = '#fccf05';
+            setTimeout(() => noteEl.style.backgroundColor = '#fffcf5', 300);
+        }
+
+        // Build SMS body with all fields, exactly one choice for time, way, reason.
+        function buildSmsText() {
+            // Referral name
+            const refName = document.getElementById('refName').value.trim() || 'Not provided';
+            const refPhone = document.getElementById('refPhone').value.trim() || 'No phone';
+            
+            // Best time (radio)
+            const bestTimeElem = document.querySelector('input[name="bestTime"]:checked');
+            const bestTime = bestTimeElem ? bestTimeElem.value : 'not specified';
+
+            // Best way (radio call/text)
+            const bestWayElem = document.querySelector('input[name="bestWay"]:checked');
+            const bestWay = bestWayElem ? bestWayElem.value : 'not specified';
+
+            // Reason (radio) - includes hidden other if selected
+            const reasonElem = document.querySelector('input[name="reason"]:checked');
+            let reason = reasonElem ? reasonElem.value : 'not specified';
+
+            // Other note content (always show the mechanic discussion)
+            const otherNote = document.getElementById('otherNote').innerText;
+
+            // If the hidden "other" reason is selected, we append the "will discuss" note accordingly
+            if (document.getElementById('reasonOther').checked) {
+                reason = 'OTHER (client will discuss with mechanic)';
+            }
+
+            // name of referrer & phone
+            const referrerName = document.getElementById('referrerName').value.trim() || 'Anonymous';
+            const referrerPhone = document.getElementById('referrerPhone').value.trim() || 'no phone';
+
+            // Build readable english SMS
+            const smsBody = `REFERRAL: ${refName} (phone: ${refPhone}) | Best time: ${bestTime} | Best way: ${bestWay} | Reason: ${reason} | Referrer: ${referrerName} (${referrerPhone}) | Note: ${otherNote}`;
+
+            return smsBody;
+        }
+
+        // SMS send function (opens sms: with 5164441448)
+        function sendSms() {
+            // Gentle validation: check if referral name/phone exist.
+            const refName = document.getElementById('refName').value.trim();
+            const refPhone = document.getElementById('refPhone').value.trim();
+            if (!refName || !refPhone) {
+                alert('❤️ Please fill at least referral name and phone number before sending SMS.');
+                return;
+            }
+
+            const message = buildSmsText();
+            // encode for SMS link
+            const encodedMsg = encodeURIComponent(message);
+            // use sms: protocol (works on mobile)
+            const smsLink = `sms:5164441448?body=${encodedMsg}`;
+            
+            // try to open the sms link
+            window.location.href = smsLink;
+
+            // console log and alert for demo
+            console.log('SMS content:', message);
+            alert('📨 SMS preview (would send):\n\n' + message + '\n\n(On your phone, messaging app will open)');
+        }
+
+        // ensure note has default text on page load
+        window.onload = function() {
+            document.getElementById('otherNote').innerText = 'will discuss with mechanic shop';
+            // make sure hidden other is not checked by default (default is trouble)
+            document.getElementById('reasonOther').checked = false;
+            document.getElementById('reasonTrouble').checked = true;
+        };
+    </script>
+</body>
+</html>
